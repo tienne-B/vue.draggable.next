@@ -442,7 +442,6 @@ const draggableComponent = defineComponent({
       // move items
       const oldIndicies = itemsWithIndex.map(({ index }) => index - headerSize);
       const newIndex = this.getVmIndexFromDomIndex(evt.newIndicies[0].index);
-      console.log("newIndex", evt.newIndex);
       // note: Array.from = prevent sort change side effect
       this.updatePositions(Array.from(oldIndicies), newIndex);
       // emit change
