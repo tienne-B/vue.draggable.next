@@ -38,9 +38,17 @@
       </draggable>
     </div>
 
-    <rawDisplayer class="col-3" :value="list1" title="List 1" />
+    <rawDisplayer
+      class="col-3"
+      :value="list1"
+      title="List 1"
+    />
 
-    <rawDisplayer class="col-3" :value="list2" title="List 2" />
+    <rawDisplayer
+      class="col-3"
+      :value="list2"
+      title="List 2"
+    />
   </div>
 </template>
 
@@ -76,8 +84,16 @@ export default {
       ]
     };
   },
+  mounted: function () {
+    let myArray = [];
+    for (let i = 0; i < 900; i++) {
+      myArray.push({ id: i, name: "Item " + i });
+    }
+    this.list1 = [...myArray]
+    this.list2 = [...myArray]
+  },
   methods: {
-    log: function(evt) {
+    log: function (evt) {
       window.console.log(evt);
     }
   }
