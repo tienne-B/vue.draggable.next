@@ -217,6 +217,14 @@ const draggableComponent = defineComponent({
     },
 
     alterList(onList) {
+      const animation =
+        this._sortable.options && this._sortable.options.animation;
+      animation
+        ? setTimeout(() => this._alterList(onList), animation)
+        : this._alterList(onList);
+    },
+
+    _alterList(onList) {
       if (this.list) {
         onList(this.list);
         return;
@@ -459,17 +467,14 @@ const draggableComponent = defineComponent({
     onDragUpdateSingle(evt) {
       const swapMode = this._sortable.options && this._sortable.options.swap;
       const swapItem = swapMode ? evt.from.children[evt.oldIndex] : null;
-      removeNode(evt.item);
-      insertNodeAt(evt.from, evt.item, evt.oldIndex);
-      if (swapMode) {
-        removeNode(swapItem);
-        insertNodeAt(evt.from, swapItem, evt.newIndex);
-      }
       const oldIndex = this.context.index;
-      const newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
-      if (swapMode) this.swapPosition(oldIndex, newIndex);
-      else this.updatePosition(oldIndex, newIndex);
-      const moved = { element: this.context.element, oldIndex, newIndex };
+      if (swapMode) this.swapPosition(oldIndex, evt.newIndex);
+      else this.updatePosition(oldIndex, evt.newIndex);
+      const moved = {
+        element: this.context.element,
+        oldIndex,
+        newIndex: evt.newIndex
+      };
       this.emitChanges({ moved });
     },
 

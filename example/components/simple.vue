@@ -32,9 +32,10 @@
         item-key="name"
         class="list-group"
         ghost-class="ghost"
-        :move="checkMove"
         @start="dragging = true"
         @end="dragging = false"
+        :swap="true"
+        :animation="1000"
       >
         <template #item="{ element }">
           <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
