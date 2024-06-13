@@ -5,6 +5,10 @@ function removeNode(node) {
 }
 
 function insertNodeAt(fatherNode, node, position) {
+  if (position < 0) {
+    console.log("Warning, invalid position", position);
+    return;
+  }
   const refNode =
     position === 0
       ? fatherNode.children[0]

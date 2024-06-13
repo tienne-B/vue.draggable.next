@@ -446,6 +446,7 @@ const draggableComponent = defineComponent({
       // insert nodes
       itemsWithIndex.forEach(e => {
         if (e.index < 0) {
+          console.log("Warning, ignoring bad index", e.index);
           return;
         }
         insertNodeAt(from, e.multiDragElement, e.index)
