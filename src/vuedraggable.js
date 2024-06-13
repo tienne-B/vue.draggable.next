@@ -444,9 +444,12 @@ const draggableComponent = defineComponent({
         ({ index: a }, { index: b }) => a - b
       );
       // insert nodes
-      itemsWithIndex.forEach(e =>
+      itemsWithIndex.forEach(e => {
+        if (e.index < 0) {
+          return;
+        }
         insertNodeAt(from, e.multiDragElement, e.index)
-      );
+      });
       // move items
       const oldIndicies = itemsWithIndex.map(({ index }) => index - headerSize);
       const newIndex = this.getVmIndexFromDomIndex(evt.newIndicies[0].index);
@@ -455,13 +458,17 @@ const draggableComponent = defineComponent({
       // emit change
       const moved = oldIndicies.map((oldIndex, index) => {
         const context = this.multidragContexts.find(e => e.index === oldIndex);
+        if (context == null) {
+          return null;
+        }
         return {
           element: context.element,
           oldIndex,
           newIndex: newIndex + index
         };
       });
-      this.emitChanges({ moved });
+      const nonNullMoved = moved.filter(e => e !== null);
+      this.emitChanges({ nonNullMoved });
     },
 
     onDragUpdateSingle(evt) {
