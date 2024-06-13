@@ -4704,12 +4704,16 @@ function removeNode(node) {
   }
 }
 function insertNodeAt(fatherNode, node, position) {
+  if (position < 0) {
+    console.log("Warning, invalid position", position);
+    return;
+  }
   var refNode = position === 0 ? fatherNode.children[0] : fatherNode.children[position - 1].nextSibling;
   fatherNode.insertBefore(node, refNode);
 }
 
 // EXTERNAL MODULE: ./src/util/console.js
-var console = __webpack_require__("dbf1");
+var util_console = __webpack_require__("dbf1");
 
 // EXTERNAL MODULE: ./node_modules/.pnpm/core-js@3.37.1/node_modules/core-js/modules/es.array.reduce.js
 var es_array_reduce = __webpack_require__("e681");
@@ -5200,7 +5204,7 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
   },
   created: function created() {
     if (this.list !== null && this.modelValue !== null) {
-      console["a" /* console */].error("modelValue and list props are mutually exclusive! Please set one or another.");
+      util_console["a" /* console */].error("modelValue and list props are mutually exclusive! Please set one or another.");
     }
   },
   mounted: function mounted() {
@@ -5547,6 +5551,7 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       // insert nodes
       itemsWithIndex.forEach(function (e) {
         if (e.index < 0) {
+          util_console["a" /* console */].log("Warning, ignoring bad index", e.index);
           return;
         }
         insertNodeAt(from, e.multiDragElement, e.index);
