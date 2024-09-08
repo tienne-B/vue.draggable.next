@@ -9,7 +9,7 @@ function getSlot(slots, key) {
 
 function computeNodes({ $slots, realList, getKey }) {
   const normalizedList = realList || [];
-  const [header, footer] = ["header", "footer"].map(name =>
+  const [empty, header, footer] = ["empty", "header", "footer"].map(name =>
     getSlot($slots, name)
   );
   const { item } = $slots;
@@ -29,7 +29,8 @@ function computeNodes({ $slots, realList, getKey }) {
   return {
     header,
     footer,
-    default: defaultNodes
+    default:
+      defaultNodes.length > 0 || empty.length === 0 ? defaultNodes : empty
   };
 }
 

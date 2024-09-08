@@ -32,7 +32,6 @@
     "nested"
   ],
   "dependencies": {
-    "core-js": "^3.37.1",
     "sortablejs": "^1.15.0"
   },
   "peerDependencies": {
